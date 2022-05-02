@@ -60,7 +60,7 @@ func (srv *httpServer) handleConsume(w http.ResponseWriter, r *http.Request) {
 	}
 	log, err := srv.Logger.Read(req.Offset)
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, err.Error(), http.StatusNotFound)
 		return
 	}
 
@@ -73,18 +73,22 @@ func (srv *httpServer) handleConsume(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// ProduceRequest struct
 type ProduceRequest struct {
 	Log Log `json:"log"`
 }
 
+// ProduceResponse struct
 type ProduceResponse struct {
 	Offset uint64 `json:"offset"`
 }
 
+// ConsumeRequest struct
 type ConsumeRequest struct {
 	Offset uint64 `json:"offset"`
 }
 
+// ConsumeResponse struct
 type ConsumeResponse struct {
 	Log Log `json:"log"`
 }
